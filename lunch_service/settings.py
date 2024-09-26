@@ -20,8 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = (
-    "django-insecure-v#ldux"
-    "3&-av7yzovhz7dp6ffzk281fs9^g1j#gn&9$f4gbaex0"
+    "django-insecure-v#ldux" "3&-av7yzovhz7dp6ffzk281fs9^g1j#gn&9$f4gbaex0"
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -90,19 +89,19 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth."
-                "password_validation.UserAttributeSimilarityValidator",
+        "password_validation.UserAttributeSimilarityValidator",
     },
     {
         "NAME": "django.contrib.auth."
-                "password_validation.MinimumLengthValidator",
+        "password_validation.MinimumLengthValidator",
     },
     {
         "NAME": "django.contrib.auth."
-                "password_validation.CommonPasswordValidator",
+        "password_validation.CommonPasswordValidator",
     },
     {
         "NAME": "django.contrib.auth."
-                "password_validation.NumericPasswordValidator",
+        "password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -128,6 +127,12 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "user.User"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=600),
