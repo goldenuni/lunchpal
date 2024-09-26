@@ -16,7 +16,9 @@ class RestaurantMenuTests(APITestCase):
             email='superuser@example.com', password='testpass'
         )
         self.manager = User.objects.create_user(
-            email='manager@example.com', password='testpass', user_type="manager"
+            email='manager@example.com',
+            password='testpass',
+            user_type="manager"
         )
         self.employee = User.objects.create_user(
             email='employee@example.com', password='testpass'
@@ -71,7 +73,10 @@ class RestaurantMenuTests(APITestCase):
         token = self.authenticate(self.employee)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
 
-        url = reverse('lunchpal:vote-for-menu', kwargs={'menu_id': self.menu.id})
+        url = reverse(
+            'lunchpal:vote-for-menu',
+            kwargs={'menu_id': self.menu.id}
+        )
         response = self.client.post(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -108,7 +113,7 @@ class RestaurantMenuTests(APITestCase):
         token = self.authenticate(self.employee)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
 
-        url = reverse('lunchpal:vote-for-menu', kwargs={'menu_id': 999})  # Non-existent menu ID
+        url = reverse('lunchpal:vote-for-menu', kwargs={'menu_id': 999})
         response = self.client.post(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
@@ -118,15 +123,18 @@ class RestaurantMenuTests(APITestCase):
 
         url = reverse('lunchpal:restaurant-list-create')
         data = {
-            'address': '456 New St',  # Missing name
+            'address': '456 New St',
             'cuisine': 'New Cuisine'
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_vote_for_menu_as_unauthorized_user(self):
-        url = reverse('lunchpal:vote-for-menu', kwargs={'menu_id': self.menu.id})
-        response = self.client.post(url)  # No authentication
+        url = reverse(
+            'lunchpal:vote-for-menu',
+            kwargs={'menu_id': self.menu.id}
+        )
+        response = self.client.post(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_today_results_no_menus(self):
