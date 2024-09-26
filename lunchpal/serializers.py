@@ -5,16 +5,26 @@ from lunchpal.models import Restaurant, Menu
 class RestaurantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Restaurant
-        fields = ['id', 'name', 'address', 'cuisine']
+        fields = ["id", "name", "address", "cuisine"]
 
 
 class MenuSerializer(serializers.ModelSerializer):
-    restaurant = RestaurantSerializer(read_only=True)
+    restaurant = serializers.PrimaryKeyRelatedField(
+        queryset=Restaurant.objects.all()
+    )
 
     class Meta:
         model = Menu
-        fields = ['id', 'restaurant', 'items', 'date', 'created_at', 'votes', 'price']
-        read_only_fields = ['created_at', 'votes']
+        fields = [
+            "id",
+            "restaurant",
+            "items",
+            "date",
+            "created_at",
+            "votes",
+            "price",
+        ]
+        read_only_fields = ["created_at", "votes"]
 
     def create(self, validated_data):
         return Menu.objects.create(**validated_data)

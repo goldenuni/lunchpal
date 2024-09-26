@@ -1,4 +1,4 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import BasePermission
 
 
 class IsSuperuserOrManager(BasePermission):
@@ -7,7 +7,9 @@ class IsSuperuserOrManager(BasePermission):
     """
 
     def has_permission(self, request, view):
-        return request.user.is_superuser or request.user.user_type == 'manager'
+        return (
+            request.user.is_superuser or request.user.user_type == "manager"
+        )
 
 
 class IsManager(BasePermission):
@@ -16,7 +18,7 @@ class IsManager(BasePermission):
     """
 
     def has_permission(self, request, view):
-        return request.user.user_type == 'manager'
+        return request.user.user_type == "manager"
 
 
 class IsSuperuserOrEmployee(BasePermission):
@@ -25,4 +27,6 @@ class IsSuperuserOrEmployee(BasePermission):
     """
 
     def has_permission(self, request, view):
-        return request.user.is_superuser or request.user.user_type == 'employee'
+        return (
+            request.user.is_superuser or request.user.user_type == "employee"
+        )
